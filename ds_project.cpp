@@ -14,8 +14,16 @@ struct signup
 {
     char id[100], password[20];
 };
+int number_of_teacher;
 struct signup signuplist[10000];
 int i;
+struct student_below_8
+{
+    char name[100],mobile[20],section[10];
+    int roll,classs,bangla,english,math,science,bangladesh_and_global_studies,islam;
+};
+struct student_below_8 below_8_list[10000];
+int nos,f=0;
 void gotoxy(int x, int y)
 {
     COORD coordinate;
@@ -27,7 +35,6 @@ void setColor(int textColor) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, textColor);
 }
-int number_of_teacher;
 
 
 int main()
@@ -104,10 +111,10 @@ int main()
                         {
                             system("cls");
                             gotoxy(30,8);cout << "--Teacher's Menu--"<<endl;
-                            gotoxy(30,10);cout << "1.Add student info"<<endl;
+                            gotoxy(30,10);cout << "1.Add student info and result"<<endl;
                             gotoxy(30,12);cout << "2.Delete student info"<<endl;
                             gotoxy(30,14);cout << "3.Update student info"<<endl;
-                            gotoxy(30,16);cout << "4.Back"<<endl;
+                            gotoxy(30,16);cout << "4. Back"<<endl;
                             gotoxy(30,18);cout << "Select option: ";
                             cin >> opt;
                             system("cls");
@@ -115,35 +122,133 @@ int main()
                             if(opt == 1)
                             {
                                 //Add a student info
-                                while (1)
-                                {
-                                    gotoxy(30,8);cout << "--Select the class of a student--" << endl;
-                                    gotoxy(30,10);cout <<"1. Below class 8" << endl;
-                                    gotoxy(30,12);cout <<"2. Above class 8" << endl;
-                                    gotoxy(30,14);cout <<"3.Back" << endl;
-                                    gotoxy(30,16);cout <<"Select option: ";
-                                    cin >> opt;
-                                    system("cls");
-                                    if (opt==1)
+
+                                gotoxy(30,8);
+                                cout << "--Select the class of a student--" << endl;
+                                gotoxy(30,10);
+                                cout <<"1. Below class 8" << endl;
+                                gotoxy(30,12);
+                                cout <<"2. Above class 8" << endl;
+                                gotoxy(30,16);
+                                cout <<"Select option: ";
+                                cin >> opt;
+                                system("cls");
+                                if (opt==1)
+                                    if (opt == 1)
                                     {
-                                        //Add a student info below class 8
-                                    }
-                                    else if (opt==2)
-                                    {
-                                        //Add a student info above class 8
-                                    }
-                                    else if (opt ==3)
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        setColor(4);
-                                        gotoxy(30,14);cout << "Invalid Input!" << endl;
+                                        FILE *student_below_8 = fopen("below_class_8.txt", "r");
+                                        if (student_below_8 == NULL)
+                                        {
+                                            student_below_8 = fopen("below_class_8.txt", "w");
+                                            fclose(student_below_8);
+                                            student_below_8 = NULL; 
+                                        }
+                                        else
+                                        {
+                                            int i = 0;
+                                            while (fscanf(student_below_8, "\n%[^\n]", below_8_list[i].name) == 1)
+                                            {
+                                                fscanf(student_below_8, "%d", &below_8_list[i].roll);
+                                                fscanf(student_below_8, "%d", &below_8_list[i].classs);
+                                                fscanf(student_below_8, "%s", below_8_list[i].section);
+                                                fscanf(student_below_8, "%d", &below_8_list[i].bangla);
+                                                fscanf(student_below_8, "%d", &below_8_list[i].english);
+                                                fscanf(student_below_8, "%d", &below_8_list[i].math);
+                                                fscanf(student_below_8, "%d", &below_8_list[i].science);
+                                                fscanf(student_below_8, "%d", &below_8_list[i].bangladesh_and_global_studies);
+                                                fscanf(student_below_8, "%d", &below_8_list[i].islam);
+                                                i++;
+                                            }
+                                            nos = i; 
+                                            fclose(student_below_8);
+                                        }
+
+                                        struct student_below_8 a;
+                                        gotoxy(30,2);
+                                        cout << "--Add Student Info & Result--" << endl;
+                                        gotoxy(30,4);
+                                        cout << "Enter Name: ";
+                                        cin.ignore();
+                                        cin.getline(a.name, 100);
+                                        gotoxy(30,6);
+                                        cout << "Enter Roll: ";
+                                        cin >> a.roll;
+                                        gotoxy(30,8);
+                                        cout << "Enter Class: ";
+                                        cin >> a.classs;
+                                        gotoxy(30,10);
+                                        cout << "Enter Section: ";
+                                        cin >> a.section;
+                                        gotoxy(30,14);
+                                        cout << "--Enter Result--" << endl;
+                                        gotoxy(30,16);
+                                        cout << "Enter The result of Bangla: ";
+                                        cin >> a.bangla;
+                                        gotoxy(30,18);
+                                        cout << "Enter The result of English: ";
+                                        cin >> a.english;
+                                        gotoxy(30,20);
+                                        cout << "Enter The result of Math: ";
+                                        cin >> a.math;
+                                        gotoxy(30,22);
+                                        cout << "Enter The result of Science: ";
+                                        cin >> a.science;
+                                        gotoxy(30,24);
+                                        cout << "Enter The result of Bangladesh and Global Studies: ";
+                                        cin >> a.bangladesh_and_global_studies;
+                                        gotoxy(30,26);
+                                        cout << "Enter The result of Islam and Moral Education: ";
+                                        cin >> a.islam;
+
+                                        
+                                        below_8_list[nos] = a;
+                                        nos++;
+
+                                        
+                                        FILE *below_8_student_add = fopen("below_class_8.txt", "w");
+                                        if (below_8_student_add != NULL)
+                                        {
+                                            for (int i = 0; i < nos; i++)
+                                            {
+                                                fprintf(below_8_student_add, "%s\n", below_8_list[i].name);
+                                                fprintf(below_8_student_add, "%d\n", below_8_list[i].roll);
+                                                fprintf(below_8_student_add, "%d\n", below_8_list[i].classs);
+                                                fprintf(below_8_student_add, "%s\n", below_8_list[i].section);
+                                                fprintf(below_8_student_add, "%d\n", below_8_list[i].bangla);
+                                                fprintf(below_8_student_add, "%d\n", below_8_list[i].english);
+                                                fprintf(below_8_student_add, "%d\n", below_8_list[i].math);
+                                                fprintf(below_8_student_add, "%d\n", below_8_list[i].science);
+                                                fprintf(below_8_student_add, "%d\n", below_8_list[i].bangladesh_and_global_studies);
+                                                fprintf(below_8_student_add, "%d\n", below_8_list[i].islam);
+                                            }
+                                            fclose(below_8_student_add);
+                                        }
+                                        else
+                                        {
+                                            setColor(4);
+                                            gotoxy(30,28);
+                                            cout << "Error saving data!" << endl;
+                                            setColor(7);
+                                        }
+
+                                        setColor(10);
+                                        gotoxy(30,28);
+                                        cout << "Info Successfully Added" << endl;
                                         setColor(7);
-                                        Sleep(800);
+                                        Sleep(1000);
                                         system("cls");
                                     }
+                                else if (opt==2)
+                                {
+                                    //Add a student info above class 8
+                                }
+                                else
+                                {
+                                    setColor(4);
+                                    gotoxy(30,14);cout << "Invalid Input!" << endl;
+                                    setColor(7);
+                                    Sleep(800);
+                                    system("cls");
                                 }
                             }
                             else if (opt ==2)
