@@ -54,7 +54,6 @@ void setColor(int textColor)
     SetConsoleTextAttribute(hConsole, textColor);
 }
 
-
 int login()
 {
     FILE *fr, *fw;
@@ -199,7 +198,6 @@ void below_8_student_addd()
     Sleep(1000);
     system("cls");
 }
-
 
 void add_science_student()
 {
@@ -816,7 +814,7 @@ int main()
                             system("cls");
                             break;
                         }
-                        else if(opt == 2)
+                        else if (opt == 2)
                         {
                             break;
                         }
@@ -848,24 +846,97 @@ int main()
         }
         else if (opt == 2)
         {
-            
-        }
-        else if (opt == 3)
-        {
-            // About us
-        }
-        else if (opt == 4)
-        {
-            break;
-        }
-        else
-        {
-            setColor(4);
-            gotoxy(30, 14);
-            cout << "Invalid input!" << endl;
-            setColor(7);
-            Sleep(700);
-            system("cls");
+           /// student search
+            while (1)
+            {
+                gotoxy(30, 8);
+                cout << "--Student Menu--" << endl;
+                gotoxy(30, 10);
+                cout << "1. Below class 8" << endl;
+                gotoxy(30, 12);
+                cout << "2 Above class 8" << endl;
+                gotoxy(30, 14);
+                cout << "3. Back" << endl;
+                gotoxy(30, 16);
+                cout << "Select option: ";
+                cin >> opt;
+                if (opt == 1)
+                {
+                    /// Below class 8 search
+                }
+                else if (opt == 2)
+                {
+                    while (1)
+                    {
+                        gotoxy(30, 10);
+                        cout << "1. Science" << endl;
+                        gotoxy(30, 12);
+                        cout << "2. Commerce" << endl;
+                        gotoxy(30, 14);
+                        cout << "3. Arts" << endl;
+                        gotoxy(30, 16);
+                        cout << "4. Back" << endl;
+                        gotoxy(30, 18);
+                        cout << "Select option: ";
+                        cin >> opt;
+                        if(opt == 1)
+                        {
+                            ///search science student
+                        }
+                        else if(opt ==2)
+                        {
+                            /// search commerce student
+                        }
+                        else if (opt == 3)
+                        {
+                            /// search arts student
+                        }
+                        else if (opt == 4)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            setColor(4);
+                            gotoxy(30, 14);
+                            cout << "Invalid input!" << endl;
+                            setColor(7);
+                            Sleep(700);
+                            system("cls");
+                        }
+                        
+                    }
+                }
+                else if (opt == 3)
+                {
+                    break;
+                }
+                else
+                {
+                    setColor(4);
+                    gotoxy(30, 14);
+                    cout << "Invalid input!" << endl;
+                    setColor(7);
+                    Sleep(700);
+                    system("cls");
+                }
+            }
+            else if (opt == 3)
+            {
+                // About us
+            }
+            else if (opt == 4)
+            {
+                break;
+            }
+            else
+            {
+                setColor(4);
+                gotoxy(30, 14);
+                cout << "Invalid input!" << endl;
+                setColor(7);
+                Sleep(700);
+                system("cls");
+            }
         }
     }
-}
