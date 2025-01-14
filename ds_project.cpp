@@ -1448,7 +1448,16 @@ int main()
         }
         else if (opt == 3)
         {
-            // About us
+            gotoxy(40, 8);cout << "Team Leader: Masad Rayan" << endl;
+            gotoxy(40, 10);cout << "ID: C233007" << endl;
+            gotoxy(40, 14);cout << "Member-1: Mohammad Shafayat Karim " << endl;
+            gotoxy(40, 16);cout << "ID: C233003" << endl;
+            gotoxy(40, 20);cout << "Member-2: Shafin Mahmud" << endl;
+            gotoxy(40, 22);cout << "ID: C233034";
+            gotoxy(40,26);cout << "Press any key to continue..." ;
+            getchar();
+            getchar();
+            system("cls");
         }
         else if (opt == 4)
         {
