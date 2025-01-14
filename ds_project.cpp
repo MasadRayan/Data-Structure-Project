@@ -9,6 +9,7 @@ struct login
     char id[50], pass[50];
 };
 struct login loginInfo[10000];
+int opt;
 struct signup
 {
     char id[100], password[20];
@@ -26,18 +27,81 @@ struct student_above_8_science
 {
     char name1[100], mobile1[20], section1[10];
     int roll1, classs1, bangla_1st_2nd1, english_1st_2nd1, islam_and_moral1, bangladesh_and_global1, ict1, math1, highermath, physics, chemistry, biology, physical_education1;
+    int total_marks()
+    {
+        return bangla_1st_2nd1 + english_1st_2nd1 + islam_and_moral1 + bangladesh_and_global1 + ict1 +
+               math1 + highermath + physics + chemistry + biology + physical_education1;
+    }
+    string grade()
+    {
+        int total = total_marks();
+        if (total >= 900)
+            return "A+";
+        else if (total >= 800)
+            return "A";
+        else if (total >= 700)
+            return "B";
+        else if (total >= 600)
+            return "C";
+        else if (total >= 500)
+            return "D";
+        else
+            return "F";
+    }
 };
 struct student_above_8_science student_science[10000];
 struct student_above_8_commerce
 {
     char name2[100], mobile2[20], section2[10];
     int roll2, classs2, bangla_1st_2nd2, english_1st_2nd2, islam_and_moral2, bangladesh_and_global2, ict2, math2, accounting, finence, business_venture, physical_education2;
+    int total_marks()
+    {
+        return bangla_1st_2nd2 + english_1st_2nd2 + islam_and_moral2 + bangladesh_and_global2 + ict2 +
+               math2 + accounting + finence + business_venture + physical_education2;
+    }
+    string grade()
+    {
+        int total = total_marks();
+        if (total >= 900)
+            return "A+";
+        else if (total >= 800)
+            return "A";
+        else if (total >= 700)
+            return "B";
+        else if (total >= 600)
+            return "C";
+        else if (total >= 500)
+            return "D";
+        else
+            return "F";
+    }
 };
 struct student_above_8_commerce students_commerce[10000];
 struct student_above_8_arts
 {
     char name3[100], mobile3[20], section3[10];
     int roll3, classs3, bangla_1st_2nd3, english_1st_2nd3, islam_and_moral3, bangladesh_and_global3, ict3, math3, geography, municipal_policy, history, economy, physical_education3;
+    int total_marks()
+    {
+        return bangla_1st_2nd3 + english_1st_2nd3 + islam_and_moral3 + bangladesh_and_global3 + ict3 +
+               math3 + geography + municipal_policy + history + economy + physical_education3;
+    }
+    string grade()
+    {
+        int total = total_marks();
+        if (total >= 900)
+            return "A+";
+        else if (total >= 800)
+            return "A";
+        else if (total >= 700)
+            return "B";
+        else if (total >= 600)
+            return "C";
+        else if (total >= 500)
+            return "D";
+        else
+            return "F";
+    }
 };
 struct student_above_8_arts student_arts[10000];
 int nos, f = 0;
@@ -94,6 +158,88 @@ int login()
         }
     }
     return f;
+}
+
+void signupp()
+{
+    while (1)
+    {
+        gotoxy(30, 8);
+        cout << "1. Continue Signing-up" << endl;
+        gotoxy(30, 10);
+        cout << "2. Back" << endl;
+        gotoxy(30, 12);
+        cout << "Select option: ";
+        cin >> opt;
+        system("cls");
+        if (opt == 1)
+        {
+            ///----->read file---->copy in array--->write file--read
+            FILE *sup = fopen(filename, "r");
+            if (sup == 0)
+            {
+                sup = fopen(filename, "w");
+                fclose(sup);
+            }
+
+            else if (sup != 0)
+            {
+                int i = 0;
+                while (fscanf(sup, "\n%[^\n]", signuplist[i].id) == 1)
+                {
+                    fscanf(sup, "\n%[^\n]", signuplist[i].password);
+                    i++;
+                }
+                number_of_teacher = i;
+            }
+            fclose(sup);
+
+            struct signup a;
+
+            gotoxy(30, 8);
+            cout << " ---Sign Up---" << endl;
+            gotoxy(30, 10);
+            cout << "Enter your ID: ";
+            cin >> a.id;
+            gotoxy(30, 12);
+            cout << "Enter your password: ";
+            cin >> a.password;
+
+            signuplist[number_of_teacher] = a;
+            number_of_teacher++;
+
+            /// array-->write
+            FILE *fout = fopen(filename, "w");
+            for (i = 0; i < number_of_teacher; i++)
+            {
+                cout << fout << signuplist[i].id;
+                fprintf(fout, "%s\n", signuplist[i].id);
+                fprintf(fout, "%s\n", signuplist[i].password);
+            }
+            fclose(fout);
+            system("cls");
+            setColor(10);
+            gotoxy(30, 14);
+            cout << "Account created successfully!" << endl;
+            setColor(7);
+            Sleep(1000);
+            system("cls");
+            break;
+        }
+        else if (opt == 2)
+        {
+            break;
+        }
+        else
+        {
+            setColor(4);
+            gotoxy(30, 14);
+            cout << "Invalid input!" << endl;
+            setColor(7);
+            Sleep(700);
+            system("cls");
+        }
+    }
 }
 
 void below_8_student_addd()
@@ -453,10 +599,10 @@ void add_commerce_student()
 
 void add_arts_student()
 {
-    FILE *student_above_8_arts = fopen("above_class_8_science.txt", "r");
+    FILE *student_above_8_arts = fopen("above_class_8_arts.txt", "r");
     if (student_above_8_arts == NULL)
     {
-        student_above_8_arts = fopen("above_class_8_science.txt", "w");
+        student_above_8_arts = fopen("above_class_8_arts.txt", "w");
         fclose(student_above_8_arts);
         student_above_8_arts = NULL;
     }
@@ -539,7 +685,7 @@ void add_arts_student()
 
     student_arts[nos] = a;
     nos++;
-    FILE *above_8_student_arts_add = fopen("above_class_8_science.txt", "w");
+    FILE *above_8_student_arts_add = fopen("above_class_8_arts.txt", "w");
     if (above_8_student_arts_add != NULL)
     {
         for (int i = 0; i < nos; i++)
@@ -572,6 +718,387 @@ void add_arts_student()
     setColor(10);
     gotoxy(30, 28);
     cout << "Info Successfully Added" << endl;
+    setColor(7);
+    Sleep(1000);
+    system("cls");
+}
+
+void delet_below_8_student()
+{
+    FILE *student_below_8 = fopen("below_class_8.txt", "r");
+    if (student_below_8 == NULL)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "Error: File does not exist!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+
+    int i = 0;
+    while (fscanf(student_below_8, "\n%[^\n]", below_8_list[i].name) == 1)
+    {
+        fscanf(student_below_8, "%d", &below_8_list[i].roll);
+        fscanf(student_below_8, "%d", &below_8_list[i].classs);
+        fscanf(student_below_8, "%s", below_8_list[i].section);
+        fscanf(student_below_8, "%d", &below_8_list[i].bangla);
+        fscanf(student_below_8, "%d", &below_8_list[i].english);
+        fscanf(student_below_8, "%d", &below_8_list[i].math);
+        fscanf(student_below_8, "%d", &below_8_list[i].science);
+        fscanf(student_below_8, "%d", &below_8_list[i].bangladesh_and_global_studies);
+        fscanf(student_below_8, "%d", &below_8_list[i].islam);
+        i++;
+    }
+    nos = i;
+    fclose(student_below_8);
+
+    int grade, rollnum, pos = -1;
+    gotoxy(30, 14);
+    cout << "Enter Class of the student: ";
+    cin >> grade;
+    gotoxy(30, 16);
+    cout << "Enter the roll of the student: ";
+    cin >> rollnum;
+
+    for (i = 0; i < nos; i++)
+    {
+        if (below_8_list[i].classs == grade && below_8_list[i].roll == rollnum)
+        {
+            pos = i;
+            break;
+        }
+    }
+
+    if (pos == -1)
+    {
+        setColor(4);
+        gotoxy(30, 18);
+        cout << "Invalid Input!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+
+    for (i = pos + 1; i < nos; i++)
+    {
+        below_8_list[i - 1] = below_8_list[i];
+    }
+    nos--;
+
+    FILE *below_8_student_add = fopen("below_class_8.txt", "w");
+    if (below_8_student_add != NULL)
+    {
+        for (i = 0; i < nos; i++)
+        {
+            fprintf(below_8_student_add, "%s\n", below_8_list[i].name);
+            fprintf(below_8_student_add, "%d\n", below_8_list[i].roll);
+            fprintf(below_8_student_add, "%d\n", below_8_list[i].classs);
+            fprintf(below_8_student_add, "%s\n", below_8_list[i].section);
+            fprintf(below_8_student_add, "%d\n", below_8_list[i].bangla);
+            fprintf(below_8_student_add, "%d\n", below_8_list[i].english);
+            fprintf(below_8_student_add, "%d\n", below_8_list[i].math);
+            fprintf(below_8_student_add, "%d\n", below_8_list[i].science);
+            fprintf(below_8_student_add, "%d\n", below_8_list[i].bangladesh_and_global_studies);
+            fprintf(below_8_student_add, "%d\n", below_8_list[i].islam);
+        }
+        fclose(below_8_student_add);
+    }
+
+    setColor(10);
+    gotoxy(30, 18);
+    cout << "Info Successfully Deleted" << endl;
+    setColor(7);
+    Sleep(1000);
+    system("cls");
+}
+
+void science_student_delet()
+{
+    FILE *student_above_8_science = fopen("above_class_8_science.txt", "r");
+    if (student_above_8_science == NULL)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "Error: File does not exist!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+    int i = 0;
+    while (fscanf(student_above_8_science, "\n%[^\n]", student_science[i].name1) == 1)
+    {
+        fscanf(student_above_8_science, "%d", &student_science[i].roll1);
+        fscanf(student_above_8_science, "%d", &student_science[i].classs1);
+        fscanf(student_above_8_science, "%s", student_science[i].section1);
+        fscanf(student_above_8_science, "%d", &student_science[i].bangla_1st_2nd1);
+        fscanf(student_above_8_science, "%d", &student_science[i].english_1st_2nd1);
+        fscanf(student_above_8_science, "%d", &student_science[i].islam_and_moral1);
+        fscanf(student_above_8_science, "%d", &student_science[i].bangladesh_and_global1);
+        fscanf(student_above_8_science, "%d", &student_science[i].ict1);
+        fscanf(student_above_8_science, "%d", &student_science[i].math1);
+        fscanf(student_above_8_science, "%d", &student_science[i].highermath);
+        fscanf(student_above_8_science, "%d", &student_science[i].physics);
+        fscanf(student_above_8_science, "%d", &student_science[i].chemistry);
+        fscanf(student_above_8_science, "%d", &student_science[i].biology);
+        fscanf(student_above_8_science, "%d", &student_science[i].physical_education1);
+        i++;
+    }
+    nos = i;
+    fclose(student_above_8_science);
+
+    int grade, rollnum, pos = -1;
+    gotoxy(30, 14);
+    cout << "Enter Class of the student: ";
+    cin >> grade;
+    gotoxy(30, 16);
+    cout << "Enter the roll of the student: ";
+    cin >> rollnum;
+
+    for (i = 0; i < nos; i++)
+    {
+        if (student_science[i].classs1 == grade && student_science[i].roll1 == rollnum)
+        {
+            pos = i;
+            break;
+        }
+    }
+
+    if (pos == -1)
+    {
+        setColor(4);
+        gotoxy(30, 18);
+        cout << "Invalid Input!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+
+    for (i = pos + 1; i < nos; i++)
+    {
+        student_science[i - 1] = student_science[i];
+    }
+    nos--;
+
+    FILE *above_8_student_science_add = fopen("above_class_8_science.txt", "w");
+    if (above_8_student_science_add != NULL)
+    {
+        for (int i = 0; i < nos; i++)
+        {
+            fprintf(above_8_student_science_add, "%s\n", student_science[i].name1);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].roll1);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].classs1);
+            fprintf(above_8_student_science_add, "%s\n", student_science[i].section1);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].bangla_1st_2nd1);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].english_1st_2nd1);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].islam_and_moral1);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].bangladesh_and_global1);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].ict1);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].math1);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].highermath);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].physics);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].chemistry);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].biology);
+            fprintf(above_8_student_science_add, "%d\n", student_science[i].physical_education1);
+        }
+        fclose(above_8_student_science_add);
+    }
+    setColor(10);
+    gotoxy(30, 18);
+    cout << "Info Successfully Deleted" << endl;
+    setColor(7);
+    Sleep(1000);
+    system("cls");
+}
+
+void commerce_student_delet()
+{
+    FILE *student_above_8_commerce = fopen("above_class_8_commerce.txt", "r");
+    if (student_above_8_commerce == NULL)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "Error: File does not exist!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+    int i = 0;
+    while (fscanf(student_above_8_commerce, "\n%[^\n]", students_commerce[i].name2) == 1)
+    {
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].roll2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].classs2);
+        fscanf(student_above_8_commerce, "%s", students_commerce[i].section2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].bangla_1st_2nd2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].english_1st_2nd2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].islam_and_moral2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].bangladesh_and_global2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].ict2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].math2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].accounting);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].finence);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].business_venture);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].physical_education2);
+        i++;
+    }
+    nos = i;
+    fclose(student_above_8_commerce);
+
+    int grade, rollnum, pos = -1;
+    gotoxy(30, 14);
+    cout << "Enter Class of the student: ";
+    cin >> grade;
+    gotoxy(30, 16);
+    cout << "Enter the roll of the student: ";
+    cin >> rollnum;
+
+    for (i = 0; i < nos; i++)
+    {
+        if (students_commerce[i].classs2 == grade && students_commerce[i].roll2 == rollnum)
+        {
+            pos = i;
+            break;
+        }
+    }
+
+    if (pos == -1)
+    {
+        setColor(4);
+        gotoxy(30, 18);
+        cout << "Invalid Input!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+
+    for (i = pos + 1; i < nos; i++)
+    {
+        students_commerce[i - 1] = students_commerce[i];
+    }
+    nos--;
+
+    FILE *above_8_student_commerce_add = fopen("above_class_8_commerce.txt", "w");
+    if (above_8_student_commerce_add != NULL)
+    {
+        for (int i = 0; i < nos; i++)
+        {
+            fprintf(above_8_student_commerce_add, "%s\n", students_commerce[i].name2);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].roll2);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].classs2);
+            fprintf(above_8_student_commerce_add, "%s\n", students_commerce[i].section2);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].bangla_1st_2nd2);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].english_1st_2nd2);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].islam_and_moral2);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].bangladesh_and_global2);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].ict2);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].math2);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].accounting);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].finence);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].business_venture);
+            fprintf(above_8_student_commerce_add, "%d\n", students_commerce[i].physical_education2);
+        }
+        fclose(above_8_student_commerce_add);
+    }
+    setColor(10);
+    gotoxy(30, 18);
+    cout << "Info Successfully Deleted" << endl;
+    setColor(7);
+    Sleep(1000);
+    system("cls");
+}
+
+void arts_student_delet()
+{
+    FILE *student_above_8_arts = fopen("above_class_8_arts.txt", "r");
+    if (student_above_8_arts == NULL)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "Error: File does not exist!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+    int i = 0;
+    while (fscanf(student_above_8_arts, "\n%[^\n]", student_arts[i].name3) == 1)
+    {
+        fscanf(student_above_8_arts, "%d", &student_arts[i].roll3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].classs3);
+        fscanf(student_above_8_arts, "%s", student_arts[i].section3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].bangla_1st_2nd3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].english_1st_2nd3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].islam_and_moral3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].bangladesh_and_global3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].ict3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].math3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].geography);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].municipal_policy);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].history);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].economy);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].physical_education3);
+        i++;
+    }
+    nos = i;
+    fclose(student_above_8_arts);
+
+    int grade, rollnum, pos = -1;
+    gotoxy(30, 14);
+    cout << "Enter Class of the student: ";
+    cin >> grade;
+    gotoxy(30, 16);
+    cout << "Enter the roll of the student: ";
+    cin >> rollnum;
+
+    for (i = 0; i < nos; i++)
+    {
+        if (student_arts[i].classs3 == grade && student_arts[i].roll3 == rollnum)
+        {
+            pos = i;
+            break;
+        }
+    }
+
+    if (pos == -1)
+    {
+        setColor(4);
+        gotoxy(30, 18);
+        cout << "Invalid Input!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+
+    for (i = pos + 1; i < nos; i++)
+    {
+        student_arts[i - 1] = student_arts[i];
+    }
+    nos--;
+    FILE *above_8_student_arts_add = fopen("above_class_8_arts.txt", "w");
+    if (above_8_student_arts_add != NULL)
+    {
+        for (int i = 0; i < nos; i++)
+        {
+            fprintf(above_8_student_arts_add, "%s\n", student_arts[i].name3);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].roll3);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].classs3);
+            fprintf(above_8_student_arts_add, "%s\n", student_arts[i].section3);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].bangla_1st_2nd3);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].english_1st_2nd3);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].islam_and_moral3);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].bangladesh_and_global3);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].ict3);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].math3);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].geography);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].municipal_policy);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].history);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].economy);
+            fprintf(above_8_student_arts_add, "%d\n", student_arts[i].physical_education3);
+        }
+        fclose(above_8_student_arts_add);
+    }
+    setColor(10);
+    gotoxy(30, 18);
+    cout << "Info Successfully Deleted" << endl;
     setColor(7);
     Sleep(1000);
     system("cls");
@@ -714,7 +1241,88 @@ int main()
                             }
                             else if (opt == 2)
                             {
-                                // delete a strudent info
+                                /// Student information delet
+                                while (1)
+                                {
+                                    gotoxy(30, 8);
+                                    cout << "--Delet a Student Information--" << endl;
+                                    gotoxy(30, 10);
+                                    cout << "1. Below Class 9" << endl;
+                                    gotoxy(30, 12);
+                                    cout << "2. Above class 8" << endl;
+                                    gotoxy(30, 14);
+                                    cout << "3. Back" << endl;
+                                    gotoxy(30, 16);
+                                    cout << "Select option: ";
+                                    cin >> opt;
+                                    system("cls");
+                                    if (opt == 1)
+                                    {
+                                        /// below class 8 delet
+                                        delet_below_8_student();
+                                    }
+                                    else if (opt == 2)
+                                    {
+                                        /// Above class 8 delet
+                                        gotoxy(30, 8);
+                                        cout << "--Select the branch of the student--" << endl;
+                                        gotoxy(30, 10);
+                                        cout << "1. Science" << endl;
+                                        gotoxy(30, 12);
+                                        cout << "2. Commerce" << endl;
+                                        gotoxy(30, 14);
+                                        cout << "3. Arts" << endl;
+                                        gotoxy(30, 16);
+                                        cout << "4. Back ";
+                                        gotoxy(30, 18);
+                                        cout << "Select option: ";
+                                        cin >> opt;
+                                        system("cls");
+                                        if (opt == 1)
+                                        {
+                                            /// Delet a science student
+                                            science_student_delet();
+                                        }
+                                        else if (opt == 2)
+                                        {
+                                            /// delet a commerce student
+                                            commerce_student_delet();
+                                        }
+                                        else if (opt == 3)
+                                        {
+                                            /// delet a arts student
+                                            arts_student_delet();
+                                        }
+                                        else if (opt == 4)
+                                        {
+                                            break;
+                                        }
+
+                                        else
+                                        {
+                                            setColor(4);
+                                            gotoxy(30, 14);
+                                            cout << "Invalid input!" << endl;
+                                            setColor(7);
+                                            Sleep(900);
+                                            system("cls");
+                                            break;
+                                        }
+                                    }
+                                    else if (opt == 3)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        setColor(4);
+                                        gotoxy(30, 14);
+                                        cout << "Invalid input!" << endl;
+                                        setColor(7);
+                                        Sleep(900);
+                                        system("cls");
+                                    }
+                                }
                             }
                             else if (opt == 3)
                             {
@@ -750,84 +1358,7 @@ int main()
                 else if (opt == 2)
                 {
                     /// Sign up
-                    while (1)
-                    {
-                        gotoxy(30, 8);
-                        cout << "1. Continue Signing-up" << endl;
-                        gotoxy(30, 10);
-                        cout << "2. Back" << endl;
-                        gotoxy(30, 12);
-                        cout << "Select option: ";
-                        cin >> opt;
-                        system("cls");
-                        if (opt == 1)
-                        {
-                            ///----->read file---->copy in array--->write file--read
-                            FILE *sup = fopen(filename, "r");
-                            if (sup == 0)
-                            {
-                                sup = fopen(filename, "w");
-                                fclose(sup);
-                            }
-
-                            else if (sup != 0)
-                            {
-                                int i = 0;
-                                while (fscanf(sup, "\n%[^\n]", signuplist[i].id) == 1)
-                                {
-                                    fscanf(sup, "\n%[^\n]", signuplist[i].password);
-                                    i++;
-                                }
-                                number_of_teacher = i;
-                            }
-                            fclose(sup);
-
-                            struct signup a;
-
-                            gotoxy(30, 8);
-                            cout << " ---Sign Up---" << endl;
-                            gotoxy(30, 10);
-                            cout << "Enter your ID: ";
-                            cin >> a.id;
-                            gotoxy(30, 12);
-                            cout << "Enter your password: ";
-                            cin >> a.password;
-
-                            signuplist[number_of_teacher] = a;
-                            number_of_teacher++;
-
-                            /// array-->write
-                            FILE *fout = fopen(filename, "w");
-                            for (i = 0; i < number_of_teacher; i++)
-                            {
-                                cout << fout << signuplist[i].id;
-                                fprintf(fout, "%s\n", signuplist[i].id);
-                                fprintf(fout, "%s\n", signuplist[i].password);
-                            }
-                            fclose(fout);
-                            system("cls");
-                            setColor(10);
-                            gotoxy(30, 14);
-                            cout << "Account created successfully!" << endl;
-                            setColor(7);
-                            Sleep(1000);
-                            system("cls");
-                            break;
-                        }
-                        else if (opt == 2)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            setColor(4);
-                            gotoxy(30, 14);
-                            cout << "Invalid input!" << endl;
-                            setColor(7);
-                            Sleep(700);
-                            system("cls");
-                        }
-                    }
+                    signupp();
                 }
                 else if (opt == 3)
                 {
@@ -846,7 +1377,7 @@ int main()
         }
         else if (opt == 2)
         {
-           /// student search
+            /// student search
             while (1)
             {
                 gotoxy(30, 8);
@@ -879,11 +1410,11 @@ int main()
                         gotoxy(30, 18);
                         cout << "Select option: ";
                         cin >> opt;
-                        if(opt == 1)
+                        if (opt == 1)
                         {
-                            ///search science student
+                            /// search science student
                         }
-                        else if(opt ==2)
+                        else if (opt == 2)
                         {
                             /// search commerce student
                         }
@@ -904,7 +1435,6 @@ int main()
                             Sleep(700);
                             system("cls");
                         }
-                        
                     }
                 }
                 else if (opt == 3)
@@ -939,6 +1469,5 @@ int main()
             Sleep(700);
             system("cls");
         }
-        
     }
 }
