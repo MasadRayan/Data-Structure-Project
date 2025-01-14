@@ -21,8 +21,29 @@ struct student_below_8
 {
     char name[100], mobile[20], section[10];
     int roll, classs, bangla, english, math, science, bangladesh_and_global_studies, islam;
+    int total_marks()
+    {
+        return bangla + english + math + science + bangladesh_and_global_studies + islam;
+    }
+    string grade()
+    {
+        int total = total_marks();
+        if (total >= 480)
+            return "A+";
+        else if (total >= 420)
+            return "A";
+        else if (total >= 360)
+            return "B";
+        else if (total >= 300)
+            return "C";
+        else if (total >= 240)
+            return "D";
+        else
+            return "F";
+    }
 };
 struct student_below_8 below_8_list[10000];
+
 struct student_above_8_science
 {
     char name1[100], mobile1[20], section1[10];
@@ -35,21 +56,22 @@ struct student_above_8_science
     string grade()
     {
         int total = total_marks();
-        if (total >= 900)
+        if (total >= 1040)
             return "A+";
-        else if (total >= 800)
+        else if (total >= 910)
             return "A";
-        else if (total >= 700)
+        else if (total >= 780)
             return "B";
-        else if (total >= 600)
+        else if (total >= 650)
             return "C";
-        else if (total >= 500)
+        else if (total >= 520)
             return "D";
         else
             return "F";
     }
 };
 struct student_above_8_science student_science[10000];
+
 struct student_above_8_commerce
 {
     char name2[100], mobile2[20], section2[10];
@@ -62,21 +84,22 @@ struct student_above_8_commerce
     string grade()
     {
         int total = total_marks();
-        if (total >= 900)
+        if (total >= 960)
             return "A+";
-        else if (total >= 800)
+        else if (total >= 840)
             return "A";
-        else if (total >= 700)
+        else if (total >= 720)
             return "B";
         else if (total >= 600)
             return "C";
-        else if (total >= 500)
+        else if (total >= 480)
             return "D";
         else
             return "F";
     }
 };
 struct student_above_8_commerce students_commerce[10000];
+
 struct student_above_8_arts
 {
     char name3[100], mobile3[20], section3[10];
@@ -89,15 +112,15 @@ struct student_above_8_arts
     string grade()
     {
         int total = total_marks();
-        if (total >= 900)
+        if (total >= 1040)
             return "A+";
-        else if (total >= 800)
+        else if (total >= 910)
             return "A";
-        else if (total >= 700)
+        else if (total >= 780)
             return "B";
-        else if (total >= 600)
+        else if (total >= 650)
             return "C";
-        else if (total >= 500)
+        else if (total >= 520)
             return "D";
         else
             return "F";
@@ -1104,6 +1127,331 @@ void arts_student_delet()
     system("cls");
 }
 
+void search_below_8()
+{
+    int f=0;
+    FILE *student_below_8 = fopen("below_class_8.txt", "r");
+    if (student_below_8 == NULL)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "Error: File does not exist!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+
+    int i = 0;
+    while (fscanf(student_below_8, "\n%[^\n]", below_8_list[i].name) == 1)
+    {
+        fscanf(student_below_8, "%d", &below_8_list[i].roll);
+        fscanf(student_below_8, "%d", &below_8_list[i].classs);
+        fscanf(student_below_8, "%s", below_8_list[i].section);
+        fscanf(student_below_8, "%d", &below_8_list[i].bangla);
+        fscanf(student_below_8, "%d", &below_8_list[i].english);
+        fscanf(student_below_8, "%d", &below_8_list[i].math);
+        fscanf(student_below_8, "%d", &below_8_list[i].science);
+        fscanf(student_below_8, "%d", &below_8_list[i].bangladesh_and_global_studies);
+        fscanf(student_below_8, "%d", &below_8_list[i].islam);
+        i++;
+    }
+    nos = i;
+    fclose(student_below_8);
+
+    int roll,clas;
+    gotoxy(30,8);cout << "---Search---" << endl;
+    gotoxy(30,10);cout << "Enter the Class you want to search: ";
+    cin >> clas;
+    gotoxy(30,12);cout << "Enter the Roll you want to search: " ;
+    cin >> roll;
+    system("cls");
+    for( i = 0 ; i < nos ; i++ )
+    {
+        if(below_8_list[i].classs == clas && below_8_list[i].roll == roll )
+        {
+            f=1;
+            gotoxy(30,4); cout << "Name: " << below_8_list[i].name << endl;
+            gotoxy(30,6); cout << "Roll: " << below_8_list[i].roll << endl;
+            gotoxy(30,8); cout << "Class: " << below_8_list[i].classs << endl;
+            gotoxy(30,10); cout << "Section: " << below_8_list[i].section<< endl;
+            gotoxy(30,12); cout << "Result of Bangla: " << below_8_list[i].bangla << endl;
+            gotoxy(30,14); cout << "Result of English: " << below_8_list[i].english << endl;
+            gotoxy(30,16); cout << "Result of Math: " << below_8_list[i].math << endl;
+            gotoxy(30,18); cout << "Result of Science: " << below_8_list[i].science << endl;
+            gotoxy(30,20); cout << "Result of Bangladesh and global studies: " << below_8_list[i].bangladesh_and_global_studies << endl;
+            gotoxy(30,22); cout << "Result of Ialam and Moral Education: " << below_8_list[i].islam << endl;
+            gotoxy(30,24); cout << "The total marks of the student: " << below_8_list[i].total_marks() << endl;
+            gotoxy(30,26); cout << "Grade: " << below_8_list[i].grade() << endl;
+            setColor(10);
+            gotoxy(30,28); cout << "Press any key to continue..." ; setColor(7);
+            getchar();
+            getchar();
+            system("cls");
+        }
+    }
+    if(f==0)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "No Match Found...!!" << endl;
+        setColor(7);
+        gotoxy(30,16);cout << "Press any key to continue...." ;
+        getchar();
+        getchar();
+        system("cls");
+    }
+}
+
+void search_above_8_science()
+{
+    f=0;
+    FILE *student_above_8_science = fopen("above_class_8_science.txt", "r");
+    if (student_above_8_science == NULL)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "Error: File does not exist!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+    int i = 0;
+    while (fscanf(student_above_8_science, "\n%[^\n]", student_science[i].name1) == 1)
+    {
+        fscanf(student_above_8_science, "%d", &student_science[i].roll1);
+        fscanf(student_above_8_science, "%d", &student_science[i].classs1);
+        fscanf(student_above_8_science, "%s", student_science[i].section1);
+        fscanf(student_above_8_science, "%d", &student_science[i].bangla_1st_2nd1);
+        fscanf(student_above_8_science, "%d", &student_science[i].english_1st_2nd1);
+        fscanf(student_above_8_science, "%d", &student_science[i].islam_and_moral1);
+        fscanf(student_above_8_science, "%d", &student_science[i].bangladesh_and_global1);
+        fscanf(student_above_8_science, "%d", &student_science[i].ict1);
+        fscanf(student_above_8_science, "%d", &student_science[i].math1);
+        fscanf(student_above_8_science, "%d", &student_science[i].highermath);
+        fscanf(student_above_8_science, "%d", &student_science[i].physics);
+        fscanf(student_above_8_science, "%d", &student_science[i].chemistry);
+        fscanf(student_above_8_science, "%d", &student_science[i].biology);
+        fscanf(student_above_8_science, "%d", &student_science[i].physical_education1);
+        i++;
+    }
+    nos = i;
+    fclose(student_above_8_science);
+
+    int roll,clas;
+    gotoxy(30,8);cout << "---Search---" << endl;
+    gotoxy(30,10);cout << "Enter the Class you want to search: ";
+    cin >> clas;
+    gotoxy(30,12);cout << "Enter the Roll you want to search: " ;
+    cin >> roll;
+    system("cls");
+
+    for( i = 0 ; i < nos ; i++ )
+    {
+        if(student_science[i].classs1 == clas && student_science[i].roll1 == roll )
+        {
+            f=1;
+            gotoxy(10,4); cout << "Name: " << student_science[i].name1 << endl;
+            gotoxy(10,6); cout << "Roll: " << student_science[i].roll1 << endl;
+            gotoxy(10,8); cout << "Class: " << student_science[i].classs1 << endl;
+            gotoxy(10,10); cout << "Section: " << student_science[i].section1<< endl;
+            gotoxy(10,12); cout << "Result of Bangla 1st and Bangla 2nd: " << student_science[i].bangla_1st_2nd1 << endl;
+            gotoxy(10,14); cout << "Result of English 1st and english 2nd: " << student_science[i].english_1st_2nd1 << endl;
+            gotoxy(10,16); cout << "Result of Islam and Moral Studies: " << student_science[i].islam_and_moral1 << endl;
+            gotoxy(60,4); cout << "Result of Bangladesh and Global Studies: " << student_science[i].bangladesh_and_global1 << endl;
+            gotoxy(60,6); cout << "Result of Ict: " << student_science[i].ict1 << endl;
+            gotoxy(60,8); cout << "Result of Math: " << student_science[i].math1 << endl;
+            gotoxy(60,10); cout << "Result of Higher Math: " << student_science[i].highermath<< endl;
+            gotoxy(60,12); cout << "Result of Physics: " << student_science[i].physics << endl;
+            gotoxy(60,14); cout << "Result of Chemistry: " << student_science[i].chemistry << endl;
+            gotoxy(60,16); cout << "Result of Biology: " << student_science[i].biology<< endl;
+            gotoxy(60,18); cout << "Result of Physical Education: " << student_science[i].physical_education1 << endl;
+            gotoxy(30,20); cout << "The total number of student: " << student_science[i].total_marks() << endl;
+            gotoxy(30,22); cout << "Grade: " << student_science[i].grade() << endl;
+            setColor(10);
+            gotoxy(30,24); cout << "Press any key to continue..." ; setColor(7);
+            getchar();
+            getchar();
+            system("cls");
+        }
+    }
+    if(f==0)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "No Match Found...!!" << endl;
+        setColor(7);
+        gotoxy(30,16);cout << "Press any key to continue...." ;
+        getchar();
+        getchar();
+        system("cls");
+    }
+}
+
+void search_above_8_commerce()
+{
+    FILE *student_above_8_commerce = fopen("above_class_8_commerce.txt", "r");
+    if (student_above_8_commerce == NULL)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "Error: File does not exist!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+    int i = 0;
+    while (fscanf(student_above_8_commerce, "\n%[^\n]", students_commerce[i].name2) == 1)
+    {
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].roll2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].classs2);
+        fscanf(student_above_8_commerce, "%s", students_commerce[i].section2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].bangla_1st_2nd2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].english_1st_2nd2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].islam_and_moral2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].bangladesh_and_global2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].ict2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].math2);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].accounting);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].finence);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].business_venture);
+        fscanf(student_above_8_commerce, "%d", &students_commerce[i].physical_education2);
+        i++;
+    }
+    nos = i;
+    fclose(student_above_8_commerce);
+
+    int roll,clas;
+    gotoxy(30,8);cout << "---Search---" << endl;
+    gotoxy(30,10);cout << "Enter the Class you want to search: ";
+    cin >> clas;
+    gotoxy(30,12);cout << "Enter the Roll you want to search: " ;
+    cin >> roll;
+    system("cls");
+
+    for( i = 0 ; i < nos ; i++ )
+    {
+        if(students_commerce[i].classs2 == clas && students_commerce[i].roll2 == roll )
+        {
+            f=1;
+            gotoxy(10,4); cout << "Name: " << students_commerce[i].name2 << endl;
+            gotoxy(10,6); cout << "Roll: " << students_commerce[i].roll2 << endl;
+            gotoxy(10,8); cout << "Class: " << students_commerce[i].classs2 << endl;
+            gotoxy(10,10); cout << "Section: " << students_commerce[i].section2 << endl;
+            gotoxy(10,12); cout << "Result of Bangla 1st and Bangla 2nd: " << students_commerce[i].bangla_1st_2nd2 << endl;
+            gotoxy(10,14); cout << "Result of English 1st and english 2nd: " << students_commerce[i].english_1st_2nd2 << endl;
+            gotoxy(10,16); cout << "Result of Islam and Moral Studies: " << students_commerce[i].islam_and_moral2 << endl;
+            gotoxy(60,4); cout << "Result of Bangladesh and Global Studies: " << students_commerce[i].bangladesh_and_global2 << endl;
+            gotoxy(60,6); cout << "Result of Ict: " << students_commerce[i].ict2 << endl;
+            gotoxy(60,8); cout << "Result of Math: " << students_commerce[i].math2 << endl;
+            gotoxy(60,10); cout << "Result of Accounting: " << students_commerce[i].accounting<< endl;
+            gotoxy(60,12); cout << "Result of Finance: " << students_commerce[i].finence << endl;
+            gotoxy(60,14); cout << "Result of Business Venture: " << students_commerce[i].business_venture << endl;
+            gotoxy(60,16); cout << "Result of Physical Education: " << students_commerce[i].physical_education2 << endl;
+            gotoxy(30,20); cout << "The total number of student: " << students_commerce[i].total_marks() << endl;
+            gotoxy(30,22); cout << "Grade: " << students_commerce[i].grade() << endl;
+            setColor(10);
+            gotoxy(30,24); cout << "Press any key to continue..." ; setColor(7);
+            getchar();
+            getchar();
+            system("cls");
+        }
+    }
+    if(f==0)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "No Match Found...!!" << endl;
+        setColor(7);
+        gotoxy(30,16);cout << "Press any key to continue...." ;
+        getchar();
+        getchar();
+        system("cls");
+    }
+}
+
+void search_above_8_arts()
+{
+    FILE *student_above_8_arts = fopen("above_class_8_arts.txt", "r");
+    if (student_above_8_arts == NULL)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "Error: File does not exist!" << endl;
+        setColor(7);
+        Sleep(800);
+        return;
+    }
+    int i = 0;
+    while (fscanf(student_above_8_arts, "\n%[^\n]", student_arts[i].name3) == 1)
+    {
+        fscanf(student_above_8_arts, "%d", &student_arts[i].roll3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].classs3);
+        fscanf(student_above_8_arts, "%s", student_arts[i].section3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].bangla_1st_2nd3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].english_1st_2nd3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].islam_and_moral3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].bangladesh_and_global3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].ict3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].math3);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].geography);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].municipal_policy);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].history);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].economy);
+        fscanf(student_above_8_arts, "%d", &student_arts[i].physical_education3);
+        i++;
+    }
+    nos = i;
+    fclose(student_above_8_arts);
+    int roll,clas;
+    gotoxy(30,8);cout << "---Search---" << endl;
+    gotoxy(30,10);cout << "Enter the Class you want to search: ";
+    cin >> clas;
+    gotoxy(30,12);cout << "Enter the Roll you want to search: " ;
+    cin >> roll;
+    system("cls");
+
+    for( i = 0 ; i < nos ; i++ )
+    {
+        if(student_arts[i].classs3 == clas && student_arts[i].roll3 == roll )
+        {
+            f=1;
+            gotoxy(10,4); cout << "Name: " << student_arts[i].name3 << endl;
+            gotoxy(10,6); cout << "Roll: " << student_arts[i].roll3 << endl;
+            gotoxy(10,8); cout << "Class: " << student_arts[i].classs3 << endl;
+            gotoxy(10,10); cout << "Section: " << student_arts[i].section3 << endl;
+            gotoxy(10,12); cout << "Result of Bangla 1st and Bangla 2nd: " << student_arts[i].bangla_1st_2nd3 << endl;
+            gotoxy(10,14); cout << "Result of English 1st and english 2nd: " << student_arts[i].english_1st_2nd3 << endl;
+            gotoxy(10,16); cout << "Result of Islam and Moral Studies: " << student_arts[i].islam_and_moral3 << endl;
+            gotoxy(60,4); cout << "Result of Bangladesh and Global Studies: " << student_arts[i].bangladesh_and_global3 << endl;
+            gotoxy(60,6); cout << "Result of Ict: " << student_arts[i].ict3 << endl;
+            gotoxy(60,8); cout << "Result of Math: " << student_arts[i].math3 << endl;
+            gotoxy(60,10); cout << "Result of Geography: " << student_arts[i].geography<< endl;
+            gotoxy(60,12); cout << "Result of Municipal Policy: " << student_arts[i].municipal_policy << endl;
+            gotoxy(60,14); cout << "Result of History: " << student_arts[i].history << endl;
+            gotoxy(60,16); cout << "Result of Economy: " << student_arts[i].economy << endl;
+            gotoxy(60,18); cout << "Result of Physical Education: " << student_arts[i].physical_education3 << endl;
+            gotoxy(30,20); cout << "The total number of student: " << student_arts[i].total_marks() << endl;
+            gotoxy(30,22); cout << "Grade: " << student_arts[i].grade() << endl;
+            setColor(10);
+            gotoxy(30,24); cout << "Press any key to continue..." ; setColor(7);
+            getchar();
+            getchar();
+            system("cls");
+        }
+    }
+    if(f==0)
+    {
+        setColor(4);
+        gotoxy(30, 14);
+        cout << "No Match Found...!!" << endl;
+        setColor(7);
+        gotoxy(30,16);cout << "Press any key to continue...." ;
+        getchar();
+        getchar();
+        system("cls");
+    }
+}
+
 int main()
 {
     int opt;
@@ -1385,9 +1733,11 @@ int main()
                 gotoxy(30, 16);
                 cout << "Select option: ";
                 cin >> opt;
+                system("cls");
                 if (opt == 1)
                 {
                     /// Below class 8 search
+                    search_below_8();
                 }
                 else if (opt == 2)
                 {
@@ -1404,17 +1754,21 @@ int main()
                         gotoxy(30, 18);
                         cout << "Select option: ";
                         cin >> opt;
+                        system("cls");
                         if (opt == 1)
                         {
                             /// search science student
+                            search_above_8_science();
                         }
                         else if (opt == 2)
                         {
                             /// search commerce student
+                            search_above_8_commerce();
                         }
                         else if (opt == 3)
                         {
                             /// search arts student
+                            search_above_8_arts();
                         }
                         else if (opt == 4)
                         {
@@ -1474,3 +1828,4 @@ int main()
         }
     }
 }
+
