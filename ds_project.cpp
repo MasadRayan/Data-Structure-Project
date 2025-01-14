@@ -1161,9 +1161,7 @@ int main()
                             gotoxy(30, 12);
                             cout << "2.Delete student info" << endl;
                             gotoxy(30, 14);
-                            cout << "3.Update student info" << endl;
-                            gotoxy(30, 16);
-                            cout << "4. Back" << endl;
+                            cout << "3. Back" << endl;
                             gotoxy(30, 18);
                             cout << "Select option: ";
                             cin >> opt;
@@ -1325,10 +1323,6 @@ int main()
                                 }
                             }
                             else if (opt == 3)
-                            {
-                                // Update a student info
-                            }
-                            else if (opt == 4)
                             {
                                 break;
                             }
