@@ -921,22 +921,24 @@ int main()
                     system("cls");
                 }
             }
-            else if (opt == 3)
-            {
-                // About us
-            }
-            else if (opt == 4)
-            {
-                break;
-            }
-            else
-            {
-                setColor(4);
-                gotoxy(30, 14);
-                cout << "Invalid input!" << endl;
-                setColor(7);
-                Sleep(700);
-                system("cls");
-            }
         }
+        else if (opt == 3)
+        {
+            // About us
+        }
+        else if (opt == 4)
+        {
+            break;
+        }
+        else
+        {
+            setColor(4);
+            gotoxy(30, 14);
+            cout << "Invalid input!" << endl;
+            setColor(7);
+            Sleep(700);
+            system("cls");
+        }
+        
     }
+}
